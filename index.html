@@ -2,14 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="description" content="Track your daily health habits - water, sleep, exercise, meals, and mood">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Health">
-    
-    <title>Daily Health</title>
+    <title>Health Ultimate</title>
     
     <link rel="manifest" href="manifest.json">
     
@@ -23,553 +20,310 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            900: '#0c4a6e',
-                        },
-                        accent: {
-                            500: '#8b5cf6', // Violet
-                            600: '#7c3aed',
-                        }
+                        dark: { 900: '#000000', 800: '#0f0f11', 700: '#1c1c1e' },
+                        neon: { blue: '#2997FF', purple: '#BF5AF2', green: '#30D158', orange: '#FF9F0A', red: '#FF453A' }
                     },
-                    fontFamily: {
-                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Inter', 'sans-serif'] },
                     animation: {
-                        'fade-in': 'fadeIn 0.3s ease-out',
-                        'slide-up': 'slideUp 0.4s ease-out',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pop': 'pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                        'slide-in': 'slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
-                        slideUp: {
-                            '0%': { transform: 'translateY(20px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' },
-                        }
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        pop: { '0%': { transform: 'scale(0.9)', opacity: 0 }, '100%': { transform: 'scale(1)', opacity: 1 } },
+                        slideIn: { '0%': { transform: 'translateY(20px)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
+                        pulseGlow: { '0%, 100%': { opacity: 1 }, '50%': { opacity: .5 } }
                     }
                 }
             }
         }
     </script>
-
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            -webkit-tap-highlight-color: transparent;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        body {
-            background-color: #f8fafc;
-            overscroll-behavior-y: none;
-        }
-
-        /* Hide Scrollbar but keep functionality */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Glassmorphism utilities */
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        
-        .glass-dark {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            background: transparent;
-            bottom: 0;
-            color: transparent;
-            cursor: pointer;
-            height: auto;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: auto;
-        }
+        body { background-color: #000; color: #fff; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }
+        .glass { background: rgba(28, 28, 30, 0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+        .glass-nav { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.08); }
+        .neon-text { text-shadow: 0 0 20px rgba(41, 151, 255, 0.5); }
+        input[type="range"] { -webkit-appearance: none; background: transparent; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.5); margin-top: -10px; }
+        input[type="range"]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="text-slate-800 bg-slate-50">
+<body>
     <div id="root"></div>
     
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
+
+        // --- PARTICLE SYSTEM ---
+        const Confetti = ({ active }) => {
+            const canvasRef = useRef(null);
+            useEffect(() => {
+                if (!active) return;
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                let particles = [];
+                const colors = ['#2997FF', '#BF5AF2', '#30D158', '#FF9F0A'];
+                
+                for(let i=0; i<100; i++) {
+                    particles.push({
+                        x: window.innerWidth/2, y: window.innerHeight/2,
+                        vx: (Math.random()-0.5)*15, vy: (Math.random()-0.5)*15,
+                        life: 1, color: colors[Math.floor(Math.random()*colors.length)],
+                        size: Math.random()*8 + 2
+                    });
+                }
+
+                const animate = () => {
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
+                    particles.forEach((p, i) => {
+                        p.x += p.vx; p.y += p.vy; p.vy += 0.5; p.life -= 0.02;
+                        ctx.fillStyle = p.color; ctx.globalAlpha = Math.max(0, p.life);
+                        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+                        if(p.life <= 0) particles.splice(i, 1);
+                    });
+                    if(particles.length > 0) requestAnimationFrame(animate);
+                };
+                animate();
+            }, [active]);
+            if (!active) return null;
+            return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-50" />;
+        };
 
         // --- ICONS ---
         const Icons = {
-            Home: ({ active }) => (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke="currentColor" strokeWidth={active ? "0" : "2"} className={active ? "text-brand-600" : "text-slate-400"}>
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-            ),
-            List: ({ active }) => (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={active ? "text-brand-600" : "text-slate-400"}>
-                    <line x1="8" y1="6" x2="21" y2="6"></line>
-                    <line x1="8" y1="12" x2="21" y2="12"></line>
-                    <line x1="8" y1="18" x2="21" y2="18"></line>
-                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                </svg>
-            ),
-            Chart: ({ active }) => (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={active ? "text-brand-600" : "text-slate-400"}>
-                    <path d="M18 20V10"></path>
-                    <path d="M12 20V4"></path>
-                    <path d="M6 20v-6"></path>
-                </svg>
-            ),
-            Droplet: ({ className }) => (
-                <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
-                </svg>
-            ),
-            Moon: ({ className }) => (
-                <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-            ),
-            Bolt: ({ className }) => (
-                <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-                </svg>
-            ),
-            ChevronLeft: () => (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            ),
-            ChevronRight: () => (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            ),
-            Trash: () => (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
-            )
+            Drop: ({c}) => <svg className={c} viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>,
+            Moon: ({c}) => <svg className={c} viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
+            Fire: ({c}) => <svg className={c} viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2C13.5 2 8 6.5 8 11C8 14 10.5 16 13 16C16 16 18.5 13.5 18.5 10.5C18.5 10.5 19.5 12 19.5 13C19.5 17 16.5 20.5 12.5 20.5C8.5 20.5 5.5 17 5.5 13C5.5 9 8 5.5 8 5.5"/></svg>,
+            Plus: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>,
+            Chart: ({a}) => <svg className={`w-7 h-7 transition-colors ${a?'text-neon-blue':'text-gray-500'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"/></svg>,
+            Home: ({a}) => <svg className={`w-7 h-7 transition-colors ${a?'text-neon-blue':'text-gray-500'}`} fill={a?"currentColor":"none"} stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>,
+            List: ({a}) => <svg className={`w-7 h-7 transition-colors ${a?'text-neon-blue':'text-gray-500'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         };
 
         // --- COMPONENTS ---
-
-        const Card = ({ children, className = "", delay = "0s" }) => (
-            <div 
-                className={`bg-white rounded-3xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 animate-slide-up ${className}`}
-                style={{ animationDelay: delay }}
-            >
+        const Card = ({ children, className = "", delay = 0 }) => (
+            <div className={`glass rounded-[30px] p-6 animate-pop ${className}`} style={{animationDelay: `${delay}ms`}}>
                 {children}
             </div>
         );
 
-        const MetricRing = ({ percentage, color, icon: Icon, value, label }) => {
-            const radius = 35;
-            const circumference = 2 * Math.PI * radius;
-            const offset = circumference - (percentage / 100) * circumference;
+        const BezierChart = ({ data, color, height = 80 }) => {
+            if (data.length < 2) return null;
+            const max = Math.max(...data) || 10;
+            const pts = data.map((val, i) => [
+                (i / (data.length - 1)) * 100, 
+                100 - (val / max) * 100
+            ]);
+            
+            // Simple smoothing
+            const path = pts.reduce((acc, [x, y], i, arr) => {
+                if (i === 0) return `M ${x},${y}`;
+                const [px, py] = arr[i - 1];
+                const cpx1 = px + (x - px) / 2;
+                const cpx2 = x - (x - px) / 2;
+                return `${acc} C ${cpx1},${py} ${cpx2},${y} ${x},${y}`;
+            }, "");
 
             return (
-                <div className="flex flex-col items-center justify-center p-2">
-                    <div className="relative w-24 h-24 flex items-center justify-center">
-                        <svg className="transform -rotate-90 w-24 h-24">
-                            <circle
-                                cx="48"
-                                cy="48"
-                                r={radius}
-                                stroke="currentColor"
-                                strokeWidth="8"
-                                fill="transparent"
-                                className="text-slate-100"
-                            />
-                            <circle
-                                cx="48"
-                                cy="48"
-                                r={radius}
-                                stroke="currentColor"
-                                strokeWidth="8"
-                                fill="transparent"
-                                strokeDasharray={circumference}
-                                strokeDashoffset={offset}
-                                strokeLinecap="round"
-                                className={`${color} transition-all duration-1000 ease-out`}
-                            />
-                        </svg>
-                        <div className={`absolute inset-0 flex items-center justify-center ${color}`}>
-                            <Icon className="w-6 h-6" />
-                        </div>
-                    </div>
-                    <div className="text-center mt-2">
-                        <div className="font-bold text-slate-800 text-lg">{value}</div>
-                        <div className="text-xs text-slate-500 font-medium uppercase tracking-wide">{label}</div>
-                    </div>
+                <div className="relative w-full overflow-hidden" style={{height}}>
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full overflow-visible">
+                        <defs>
+                            <linearGradient id={`grad-${color}`} x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor={color} stopOpacity="0.4"/>
+                                <stop offset="100%" stopColor={color} stopOpacity="0"/>
+                            </linearGradient>
+                        </defs>
+                        <path d={`${path} L 100,100 L 0,100 Z`} fill={`url(#grad-${color})`} />
+                        <path d={path} fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                    </svg>
                 </div>
             );
         };
 
-        function HealthTracker() {
-            const [activeTab, setActiveTab] = useState('add');
+        function App() {
+            const [tab, setTab] = useState('home');
             const [entries, setEntries] = useState([]);
-            const [showSuccess, setShowSuccess] = useState(false);
-            const [currentEntry, setCurrentEntry] = useState({
+            const [confetti, setConfetti] = useState(false);
+            const [today, setToday] = useState({
                 date: new Date().toISOString().split('T')[0],
-                water: 0,
-                sleep: 0,
-                exercise: 0,
-                mood: 'neutral',
-                meals: '',
-                notes: ''
+                water: 0, sleep: 0, exercise: 0, mood: 'neutral'
             });
 
             useEffect(() => {
-                const saved = localStorage.getItem('healthEntries');
-                if (saved) setEntries(JSON.parse(saved).sort((a, b) => new Date(b.date) - new Date(a.date)));
-                
-                // Register Service Worker
-                if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+                const saved = localStorage.getItem('ultHealth');
+                if (saved) setEntries(JSON.parse(saved).sort((a,b) => new Date(b.date)-new Date(a.date)));
             }, []);
 
-            const saveEntries = (newEntries) => {
-                setEntries(newEntries);
-                localStorage.setItem('healthEntries', JSON.stringify(newEntries));
+            const save = () => {
+                const newE = [{...today, id: Date.now()}, ...entries];
+                setEntries(newE);
+                localStorage.setItem('ultHealth', JSON.stringify(newE));
+                setConfetti(true);
+                setTimeout(() => setConfetti(false), 3000);
+                setToday({...today, water:0, sleep:0, exercise:0});
             };
 
-            const handleSubmit = () => {
-                const newEntry = { ...currentEntry, id: Date.now().toString() };
-                saveEntries([newEntry, ...entries]);
-                
-                // Reset form
-                setCurrentEntry({
-                    ...currentEntry,
-                    water: 0, sleep: 0, exercise: 0, meals: '', notes: ''
-                });
-                
-                // Show Success Animation
-                setShowSuccess(true);
-                setTimeout(() => setShowSuccess(false), 2000);
-            };
+            const getHistoryData = (key) => entries.slice(0, 7).map(e => e[key] || 0).reverse();
 
-            const moods = [
-                { id: 'terrible', emoji: '😫', label: 'Rough' },
-                { id: 'bad', emoji: '😕', label: 'Meh' },
-                { id: 'neutral', emoji: '😐', label: 'Okay' },
-                { id: 'good', emoji: '🙂', label: 'Good' },
-                { id: 'great', emoji: '🤩', label: 'Super' }
-            ];
-
-            // Calculate Stats for Summary
-            const getStats = () => {
-                const last7 = entries.slice(0, 7);
-                if (!last7.length) return null;
-                
-                const totals = last7.reduce((acc, curr) => ({
-                    water: acc.water + (curr.water || 0),
-                    sleep: acc.sleep + (curr.sleep || 0),
-                    exercise: acc.exercise + (curr.exercise || 0)
-                }), { water: 0, sleep: 0, exercise: 0 });
-
-                return {
-                    water: (totals.water / last7.length).toFixed(1),
-                    sleep: (totals.sleep / last7.length).toFixed(1),
-                    exercise: (totals.exercise / last7.length).toFixed(0),
-                    streak: last7.length
-                };
-            };
-
-            const stats = getStats();
+            // Background Gradient Blobs
+            const Bg = () => (
+                <div className="fixed inset-0 z-[-1] overflow-hidden bg-black">
+                    <div className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-neon-blue/20 rounded-full blur-[120px] animate-float"></div>
+                    <div className="absolute top-[40%] -right-[10%] w-[500px] h-[500px] bg-neon-purple/20 rounded-full blur-[120px] animate-float" style={{animationDelay: '-3s'}}></div>
+                    <div className="absolute -bottom-[20%] left-[20%] w-[600px] h-[600px] bg-neon-green/10 rounded-full blur-[120px] animate-float" style={{animationDelay: '-5s'}}></div>
+                </div>
+            );
 
             return (
-                <div className="min-h-screen pb-24 relative overflow-hidden bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200">
+                <div className="min-h-screen pb-32 text-white font-sans selection:bg-neon-blue selection:text-white">
+                    <Bg />
+                    <Confetti active={confetti} />
                     
-                    {/* TOP HEADER */}
-                    <div className="sticky top-0 z-30 glass px-6 py-4 flex justify-between items-center mb-6">
+                    {/* TOP BAR */}
+                    <div className="px-6 pt-14 pb-4 flex justify-between items-end animate-slide-in">
                         <div>
-                            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-0.5">
-                                {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-                            </p>
-                            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                                Hello, User <span className="inline-block animate-pulse-slow">👋</span>
-                            </h1>
-                        </div>
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-500 to-accent-500 p-[2px]">
-                            <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
-                                <img src={`https://api.dicebear.com/7.x/notionists/svg?seed=Felix`} alt="avatar" />
+                            <div className="text-neon-blue text-xs font-bold uppercase tracking-[0.2em] mb-1">
+                                {new Date().toLocaleDateString('en-US', {weekday:'long', day:'numeric'})}
                             </div>
+                            <h1 className="text-4xl font-black tracking-tight">Health<span className="text-neon-blue">.</span></h1>
+                        </div>
+                        <div className="w-12 h-12 rounded-full border-2 border-white/10 bg-dark-700 overflow-hidden relative">
+                            <img src="https://api.dicebear.com/7.x/notionists/svg?seed=Max" className="w-full h-full" />
                         </div>
                     </div>
 
-                    {/* MAIN CONTENT AREA */}
-                    <div className="px-5 max-w-lg mx-auto space-y-6">
+                    <div className="px-5 space-y-6 max-w-lg mx-auto">
                         
-                        {/* --- TAB: ADD ENTRY (HOME) --- */}
-                        {activeTab === 'add' && (
-                            <div className="space-y-6 animate-fade-in">
-                                
-                                {/* Date Picker Card */}
-                                <Card>
-                                    <div className="relative flex items-center justify-between">
-                                        <div className="flex items-center gap-3">
-                                            <div className="p-2 bg-brand-50 rounded-xl text-brand-600">
-                                                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                                            </div>
-                                            <div>
-                                                <label className="text-xs text-slate-400 font-bold uppercase tracking-wider block">Tracking For</label>
-                                                <div className="font-semibold text-slate-800">{new Date(currentEntry.date).toDateString()}</div>
+                        {/* --- HOME TAB --- */}
+                        {tab === 'home' && (
+                            <>
+                                {/* WATER CARD */}
+                                <Card delay={0} className="relative overflow-hidden group">
+                                    <div className="flex justify-between items-start z-10 relative">
+                                        <div>
+                                            <div className="text-sm text-white/50 font-bold uppercase tracking-wider mb-1">Hydration</div>
+                                            <div className="text-5xl font-black font-mono tracking-tighter">
+                                                {today.water}<span className="text-lg text-neon-blue ml-1">/8</span>
                                             </div>
                                         </div>
-                                        <input 
-                                            type="date" 
-                                            value={currentEntry.date}
-                                            onChange={(e) => setCurrentEntry({...currentEntry, date: e.target.value})}
-                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                        />
-                                        <div className="pointer-events-none text-slate-300">
-                                            <Icons.ChevronRight />
+                                        <div className="p-3 bg-neon-blue/20 rounded-2xl text-neon-blue">
+                                            <Icons.Drop c="w-8 h-8" />
                                         </div>
+                                    </div>
+                                    {/* Liquid Background Effect */}
+                                    <div className="absolute bottom-0 left-0 right-0 bg-neon-blue/20 transition-all duration-500 ease-out" 
+                                         style={{height: `${(today.water/8)*100}%`}}></div>
+                                    
+                                    <div className="flex gap-3 mt-6 relative z-10">
+                                        <button onClick={()=>setToday(t=>({...t, water: Math.max(0, t.water-1)}))} className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl font-bold active:scale-90 transition">-</button>
+                                        <button onClick={()=>setToday(t=>({...t, water: t.water+1}))} className="flex-1 h-12 rounded-full bg-neon-blue text-black font-bold flex items-center justify-center gap-2 active:scale-95 transition shadow-[0_0_20px_rgba(41,151,255,0.4)]">
+                                            <Icons.Plus /> Add Glass
+                                        </button>
                                     </div>
                                 </Card>
 
-                                {/* Mood Selector */}
-                                <div>
-                                    <h3 className="text-lg font-bold text-slate-800 mb-4 px-2">How do you feel?</h3>
-                                    <div className="flex justify-between gap-2 overflow-x-auto pb-2 no-scrollbar">
-                                        {moods.map((m) => (
-                                            <button
-                                                key={m.id}
-                                                onClick={() => setCurrentEntry({...currentEntry, mood: m.id})}
-                                                className={`flex flex-col items-center gap-2 p-3 rounded-2xl transition-all duration-300 min-w-[70px] ${
-                                                    currentEntry.mood === m.id 
-                                                    ? 'bg-slate-900 text-white shadow-lg scale-110' 
-                                                    : 'bg-white text-slate-400 hover:bg-slate-50'
-                                                }`}
-                                            >
-                                                <span className="text-3xl filter drop-shadow-sm">{m.emoji}</span>
-                                                <span className="text-xs font-medium">{m.label}</span>
+                                {/* BENTO GRID FOR SLEEP & EXERCISE */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    <Card delay={100} className="bg-gradient-to-br from-dark-700 to-dark-800 border-none">
+                                        <Icons.Moon c="w-8 h-8 text-neon-purple mb-4" />
+                                        <div className="text-3xl font-black">{today.sleep}<span className="text-sm text-white/40">h</span></div>
+                                        <div className="text-xs text-neon-purple font-bold uppercase tracking-wider mb-4">Sleep</div>
+                                        <div className="flex justify-between bg-black/20 rounded-full p-1">
+                                            <button onClick={()=>setToday(t=>({...t, sleep: Math.max(0, t.sleep-0.5)}))} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">-</button>
+                                            <button onClick={()=>setToday(t=>({...t, sleep: t.sleep+0.5}))} className="w-8 h-8 rounded-full bg-neon-purple text-white flex items-center justify-center">+</button>
+                                        </div>
+                                    </Card>
+
+                                    <Card delay={200} className="bg-gradient-to-br from-dark-700 to-dark-800 border-none">
+                                        <Icons.Fire c="w-8 h-8 text-neon-green mb-4" />
+                                        <div className="text-3xl font-black">{today.exercise}<span className="text-sm text-white/40">m</span></div>
+                                        <div className="text-xs text-neon-green font-bold uppercase tracking-wider mb-4">Activity</div>
+                                        <input type="range" min="0" max="120" step="10" value={today.exercise} 
+                                            onChange={e=>setToday({...today, exercise: parseInt(e.target.value)})} 
+                                            className="w-full accent-neon-green" />
+                                    </Card>
+                                </div>
+
+                                {/* MOOD SLIDER */}
+                                <Card delay={300}>
+                                    <div className="text-sm text-white/50 font-bold uppercase tracking-wider mb-4">Mood Check</div>
+                                    <div className="flex justify-between">
+                                        {['😫','😕','😐','🙂','🤩'].map((m,i) => (
+                                            <button key={i} onClick={()=>setToday({...today, mood: m})} 
+                                                className={`text-3xl transition-all duration-300 p-2 rounded-2xl ${today.mood===m ? 'bg-white/20 scale-125' : 'opacity-40 grayscale'}`}>
+                                                {m}
                                             </button>
                                         ))}
                                     </div>
-                                </div>
-
-                                {/* Metrics Grid */}
-                                <div className="grid grid-cols-2 gap-4">
-                                    {/* Water */}
-                                    <Card className="relative overflow-hidden group">
-                                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                            <Icons.Droplet className="w-16 h-16 text-brand-500" />
-                                        </div>
-                                        <label className="text-slate-500 text-xs font-bold uppercase tracking-wider">Water</label>
-                                        <div className="flex items-end gap-1 mt-2 mb-4">
-                                            <span className="text-4xl font-extrabold text-brand-600">{currentEntry.water}</span>
-                                            <span className="text-sm font-medium text-slate-400 mb-1.5">glasses</span>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <button onClick={() => setCurrentEntry(c => ({...c, water: Math.max(0, c.water - 1)}))} className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-slate-200 font-bold">-</button>
-                                            <button onClick={() => setCurrentEntry(c => ({...c, water: c.water + 1}))} className="w-8 h-8 rounded-full bg-brand-500 text-white flex items-center justify-center shadow-lg shadow-brand-500/30 hover:bg-brand-600 font-bold">+</button>
-                                        </div>
-                                    </Card>
-
-                                    {/* Sleep */}
-                                    <Card className="relative overflow-hidden group">
-                                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                            <Icons.Moon className="w-16 h-16 text-accent-500" />
-                                        </div>
-                                        <label className="text-slate-500 text-xs font-bold uppercase tracking-wider">Sleep</label>
-                                        <div className="flex items-end gap-1 mt-2 mb-4">
-                                            <span className="text-4xl font-extrabold text-accent-600">{currentEntry.sleep}</span>
-                                            <span className="text-sm font-medium text-slate-400 mb-1.5">hours</span>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <button onClick={() => setCurrentEntry(c => ({...c, sleep: Math.max(0, c.sleep - 0.5)}))} className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-slate-200 font-bold">-</button>
-                                            <button onClick={() => setCurrentEntry(c => ({...c, sleep: c.sleep + 0.5}))} className="w-8 h-8 rounded-full bg-accent-500 text-white flex items-center justify-center shadow-lg shadow-accent-500/30 hover:bg-accent-600 font-bold">+</button>
-                                        </div>
-                                    </Card>
-
-                                    {/* Exercise (Full Width) */}
-                                    <Card className="col-span-2 flex items-center justify-between">
-                                        <div>
-                                            <label className="text-slate-500 text-xs font-bold uppercase tracking-wider">Exercise</label>
-                                            <div className="flex items-end gap-1 mt-1">
-                                                <span className="text-3xl font-extrabold text-emerald-500">{currentEntry.exercise}</span>
-                                                <span className="text-sm font-medium text-slate-400 mb-1.5">min</span>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-4">
-                                            <input 
-                                                type="range" 
-                                                min="0" max="180" step="10" 
-                                                value={currentEntry.exercise}
-                                                onChange={(e) => setCurrentEntry({...currentEntry, exercise: parseInt(e.target.value)})}
-                                                className="w-32 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                            />
-                                            <div className="p-3 bg-emerald-50 rounded-full text-emerald-500">
-                                                <Icons.Bolt className="w-6 h-6" />
-                                            </div>
-                                        </div>
-                                    </Card>
-                                </div>
-
-                                {/* Text Inputs */}
-                                <Card>
-                                    <input 
-                                        type="text"
-                                        placeholder="What did you eat?"
-                                        value={currentEntry.meals}
-                                        onChange={(e) => setCurrentEntry({...currentEntry, meals: e.target.value})}
-                                        className="w-full bg-transparent border-b border-slate-100 py-3 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 transition-colors"
-                                    />
-                                    <input 
-                                        type="text"
-                                        placeholder="Add a note..."
-                                        value={currentEntry.notes}
-                                        onChange={(e) => setCurrentEntry({...currentEntry, notes: e.target.value})}
-                                        className="w-full bg-transparent py-3 text-slate-800 placeholder-slate-400 focus:outline-none mt-2"
-                                    />
                                 </Card>
 
-                                {/* Submit Button */}
-                                <button 
-                                    onClick={handleSubmit}
-                                    className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold text-lg shadow-xl shadow-slate-900/20 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2"
-                                >
-                                    {showSuccess ? (
-                                        <span className="animate-pulse">Saved! 🎉</span>
-                                    ) : (
-                                        "Save Entry"
-                                    )}
+                                <button onClick={save} className="w-full py-5 rounded-[25px] bg-white text-black font-black text-lg shadow-[0_0_30px_rgba(255,255,255,0.3)] active:scale-95 transition-all transform hover:-translate-y-1">
+                                    COMPLETE DAY
                                 </button>
-                                <div className="h-8"></div>
-                            </div>
+                            </>
                         )}
 
-                        {/* --- TAB: SUMMARY (CHARTS) --- */}
-                        {activeTab === 'summary' && (
-                            <div className="space-y-6 animate-fade-in">
-                                <h2 className="text-2xl font-bold text-slate-900">Weekly Summary</h2>
-                                
-                                {stats ? (
-                                    <>
-                                        <Card className="flex justify-between items-center py-8">
-                                            <MetricRing 
-                                                percentage={(stats.water / 8) * 100} 
-                                                value={stats.water} 
-                                                label="Water" 
-                                                color="text-brand-500" 
-                                                icon={Icons.Droplet}
-                                            />
-                                            <MetricRing 
-                                                percentage={(stats.sleep / 8) * 100} 
-                                                value={stats.sleep} 
-                                                label="Sleep" 
-                                                color="text-accent-500" 
-                                                icon={Icons.Moon}
-                                            />
-                                            <MetricRing 
-                                                percentage={(stats.exercise / 45) * 100} 
-                                                value={stats.exercise} 
-                                                label="Activity" 
-                                                color="text-emerald-500" 
-                                                icon={Icons.Bolt}
-                                            />
-                                        </Card>
-
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="bg-gradient-to-br from-brand-500 to-brand-600 rounded-3xl p-5 text-white shadow-lg shadow-brand-500/25">
-                                                <div className="text-brand-100 text-sm font-medium mb-1">Total Entries</div>
-                                                <div className="text-3xl font-bold">{entries.length}</div>
-                                            </div>
-                                            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-5 text-white shadow-lg shadow-slate-800/25">
-                                                <div className="text-slate-400 text-sm font-medium mb-1">Current Streak</div>
-                                                <div className="text-3xl font-bold">{stats.streak} <span className="text-lg">days</span></div>
-                                            </div>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <div className="text-center py-20 opacity-50">
-                                        <p>No enough data yet.</p>
+                        {/* --- ANALYTICS TAB --- */}
+                        {tab === 'analytics' && (
+                            <div className="space-y-6">
+                                <Card className="border-t-4 border-neon-blue">
+                                    <div className="flex justify-between items-center mb-4">
+                                        <h3 className="font-bold text-lg">Hydration Trend</h3>
+                                        <span className="text-xs text-neon-blue font-mono">LAST 7 DAYS</span>
                                     </div>
-                                )}
+                                    <BezierChart data={getHistoryData('water')} color="#2997FF" />
+                                </Card>
+
+                                <Card className="border-t-4 border-neon-purple">
+                                    <div className="flex justify-between items-center mb-4">
+                                        <h3 className="font-bold text-lg">Sleep Quality</h3>
+                                        <span className="text-xs text-neon-purple font-mono">LAST 7 DAYS</span>
+                                    </div>
+                                    <BezierChart data={getHistoryData('sleep')} color="#BF5AF2" />
+                                </Card>
                             </div>
                         )}
-
-                        {/* --- TAB: HISTORY (LIST) --- */}
-                        {activeTab === 'history' && (
-                            <div className="space-y-4 animate-fade-in">
-                                <h2 className="text-2xl font-bold text-slate-900 mb-4">History</h2>
-                                
-                                {entries.length === 0 ? (
-                                    <div className="text-center py-20 text-slate-400">
-                                        <p>No entries found.</p>
-                                    </div>
-                                ) : (
-                                    entries.map((entry, idx) => (
-                                        <div key={entry.id} className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex justify-between items-center animate-slide-up" style={{animationDelay: `${idx * 0.05}s`}}>
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-2xl">
-                                                    {moods.find(m => m.id === entry.mood)?.emoji || '😐'}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-slate-800">{entry.date}</div>
-                                                    <div className="text-xs text-slate-400 font-medium flex gap-2">
-                                                        <span>💧 {entry.water}</span>
-                                                        <span>💤 {entry.sleep}h</span>
-                                                        <span>⚡ {entry.exercise}m</span>
-                                                    </div>
+                        
+                        {/* --- HISTORY TAB --- */}
+                        {tab === 'history' && (
+                            <div className="space-y-4">
+                                {entries.map((e, i) => (
+                                    <div key={e.id} className="glass p-5 rounded-3xl flex items-center justify-between animate-slide-in" style={{animationDelay: i*50+'ms'}}>
+                                        <div className="flex items-center gap-4">
+                                            <div className="text-3xl bg-white/5 p-3 rounded-2xl">{e.mood || '😐'}</div>
+                                            <div>
+                                                <div className="font-bold text-lg">{e.date}</div>
+                                                <div className="text-xs text-white/50 flex gap-3 mt-1 font-mono">
+                                                    <span className="text-neon-blue">💧 {e.water}</span>
+                                                    <span className="text-neon-purple">🌙 {e.sleep}h</span>
                                                 </div>
                                             </div>
-                                            <button 
-                                                onClick={() => {
-                                                    const newEntries = entries.filter(e => e.id !== entry.id);
-                                                    saveEntries(newEntries);
-                                                }}
-                                                className="text-slate-300 hover:text-red-400 p-2 transition-colors"
-                                            >
-                                                <Icons.Trash />
-                                            </button>
                                         </div>
-                                    ))
-                                )}
+                                    </div>
+                                ))}
+                                {entries.length === 0 && <div className="text-center text-white/30 py-20 font-mono">NO DATA RECORDED</div>}
                             </div>
                         )}
                     </div>
 
-                    {/* BOTTOM NAVIGATION DOCK */}
-                    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm glass-dark rounded-full p-2 flex justify-between items-center shadow-2xl z-50">
-                        <button 
-                            onClick={() => setActiveTab('add')}
-                            className={`flex-1 py-3 rounded-full flex justify-center transition-all duration-300 ${activeTab === 'add' ? 'bg-white shadow-md transform -translate-y-1' : 'hover:bg-white/10'}`}
-                        >
-                            <Icons.Home active={activeTab === 'add'} />
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab('history')}
-                            className={`flex-1 py-3 rounded-full flex justify-center transition-all duration-300 ${activeTab === 'history' ? 'bg-white shadow-md transform -translate-y-1' : 'hover:bg-white/10'}`}
-                        >
-                            <Icons.List active={activeTab === 'history'} />
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab('summary')}
-                            className={`flex-1 py-3 rounded-full flex justify-center transition-all duration-300 ${activeTab === 'summary' ? 'bg-white shadow-md transform -translate-y-1' : 'hover:bg-white/10'}`}
-                        >
-                            <Icons.Chart active={activeTab === 'summary'} />
-                        </button>
+                    {/* FLOATING DOCK */}
+                    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 w-[85%] max-w-sm z-40">
+                        <div className="glass-nav rounded-full p-2 flex justify-between items-center shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                            {['home', 'analytics', 'history'].map((t) => (
+                                <button key={t} onClick={()=>setTab(t)} 
+                                    className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${tab===t ? 'bg-white text-black shadow-lg scale-110' : 'text-white/50 hover:text-white'}`}>
+                                    {t==='home' && <Icons.Home a={tab===t} />}
+                                    {t==='analytics' && <Icons.Chart a={tab===t} />}
+                                    {t==='history' && <Icons.List a={tab===t} />}
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
                 </div>
@@ -577,7 +331,7 @@
         }
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<HealthTracker />);
+        root.render(<App />);
     </script>
 </body>
 </html>
